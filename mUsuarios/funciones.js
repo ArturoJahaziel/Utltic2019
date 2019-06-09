@@ -38,7 +38,19 @@ $("#frmAlta").submit(function(e){
     var idPersona = $("#idPersona").val();
     var usuario   = $("#usuario").val();
     var contra    = $("#contra").val();
- 
+    //Validaciones
+//     if(noControl.length<5){
+//        alertify.dialog('alert').set({transition:'zoom',message: 'Transition effect: zoom'}).show();
+
+//        alertify.alert()
+//        .setting({
+//            'title':'Información',
+//            'label':'Salir',
+//            'message': 'El numero de control debe contener al menos 5 caracteres.' ,
+//            'onok': function(){ alertify.message('Gracias !');}
+//        }).show();
+//        return false;       
+//    }
    if(idPersona==0){
        alertify.dialog('alert').set({transition:'zoom',message: 'Transition effect: zoom'}).show();
 
@@ -103,8 +115,7 @@ $("#frmActuliza").submit(function(e){
    var contra  = $("#contraE").val();
    var ide     = $("#idE").val();
    
-
-
+  
    if(contra==""){
        alertify.dialog('alert').set({transition:'zoom',message: 'Transition effect: zoom'}).show();
 
@@ -234,7 +245,7 @@ function llenar_personaA(idPersona)
 }
 function restaurar_contra(idUsuario){
     $.ajax({
-        url : 'restaurar.php',
+        url : 'restaurarContra.php',
         data : {'idUsuario':idUsuario},
         type : 'POST',
         dataType : 'html',
@@ -242,7 +253,7 @@ function restaurar_contra(idUsuario){
             alertify.success('Se ha restaurado la contraseña' );
         },
         error : function(xhr, status) {
-            alert('Disculpe, existió un problema');
+            alert('Disculpe, existió un problema'); 
         },
     });
 }
