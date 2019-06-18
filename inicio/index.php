@@ -1,9 +1,11 @@
-
+<?php 
+	include('../sesiones/verificar_sesion.php');
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Sistema de Reistros de Alumnos</title>
+	<title>Sistema de Registros de Alumnos</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<link rel="stylesheet" type="text/css" href="../plugins/bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" href="../plugins/fontawesome-free-5.8.1-web/css/all.min.css">
@@ -28,21 +30,23 @@
 			</div>
 			<div class="col-xs-12 col-sm-9 col-md-10 col-lg-10 cont">
 			   <div class="titulo borde sombra">
-			        <h3>Lista de alumnos ingresados al CC</h3>
+			        <h3 align="center">Lista de alumnos ingresados al Centro de Computo</h3>
 			   </div>	
 			   <div class="contenido borde sombra">
-			        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam obcaecati eum, sit accusantium, quis recusandae consequatur tempora ipsam quidem odio cum ab rerum? Officia quis ad, fugit ut eligendi aliquid!
-					Dolorum ea doloremque ex. Quam perspiciatis doloremque, iure illum expedita earum ut eaque autem hic reiciendis quasi quaerat deleniti, corrupti maxime doloribus tempore assumenda illo necessitatibus labore, veritatis dolores voluptatibus.
-					Reprehenderit harum itaque ab veritatis non sint repellat ipsam. Obcaecati, perferendis dolor veritatis quas odio voluptates? Possimus aliquam sapiente eligendi sed cupiditate, minima tempora veritatis delectus quibusdam, libero architecto vitae?
-					Est sint laborum eligendi magnam praesentium, incidunt optio quaerat, veniam ad aspernatur non beatae quibusdam, doloribus voluptate repellat qui odio recusandae quis a! Officiis sapiente odio molestiae eius dicta a!
-					Tempore atque dicta excepturi, nobis sit ipsam dolorum saepe, corrupti a dolores eos officiis voluptatibus vel ipsum consequuntur minima asperiores cupiditate dignissimos doloremque ex odio? Nam inventore dicta sapiente aut?
-					Unde voluptatum vel tenetur, distinctio voluptatibus omnis illo quam voluptate, officia exercitationem architecto. Enim cum tempore libero velit animi? Iusto nihil recusandae ratione incidunt excepturi nam voluptatibus voluptas ea reiciendis.
-					Sequi omnis tenetur quisquam. Eligendi similique autem nesciunt obcaecati veniam, possimus consectetur minima deleniti, atque odio expedita laborum earum praesentium, quidem tenetur. Non, soluta odio nobis possimus perferendis reprehenderit. Rerum.
-					Ab molestiae accusantium itaque labore. Adipisci dicta soluta perferendis omnis facilis maxime recusandae in, asperiores sint repellat obcaecati a. Nam aut earum, harum corporis voluptatem minima et inventore ipsam deserunt.
-					Modi dolores exercitationem ea laborum animi officiis atque similique eum blanditiis, adipisci, aspernatur quisquam praesentium doloribus dicta repellat? Cum exercitationem molestiae temporibus provident soluta facere non recusandae accusamus omnis ratione.
-					Quos, porro suscipit quam voluptatibus itaque dignissimos impedit eius maxime incidunt amet possimus tempore qui ducimus doloremque, libero, debitis cupiditate accusamus corporis? Nobis veniam, nihil error minus voluptate repudiandae nisi?
-					Voluptatum laborum exercitationem laudantium dignissimos repellendus velit consequuntur rerum optio, quam atque facere commodi voluptatem at doloribus molestiae explicabo enim eaque ea fugit alias. Harum fugiat numquam quibusdam deserunt nisi?
-					Reiciendis laudantium laboriosam hic iste magni accusantium neque dolorem dignissimos dolor quis nemo temporibus ad eos, nesciunt maxime quidem voluptas itaque architecto eaque fuga perferendis vel aspernatur et repellendus. Minus.</p>
+			   		<div class="panel panel-primary">
+					  <!-- Default panel contents -->
+					  <div class="panel-heading" align="center">Registros</div>
+					  <!-- <div class="panel-body">
+					    <p>Panel Cuerpo</p>
+					  </div> -->
+					</div>
+					<!-- <div class="row">
+					  <div class="col-xs-6 col-md-3">
+					    <a href="#" class="thumbnail">
+					      <img src="..." alt="...">
+					    </a>
+					  </div>
+					</div> -->
 			   </div>	
 
 			</div>			
@@ -51,8 +55,96 @@
 	<footer class="fondo">
 		<?php 
 			include('../layout/pie.php');
+			
 		 ?>			
 	</footer>
+	<div id="modalContra" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <!-- Modal content-->
+        <form id="frmContra">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h3 class="modal-title">Actualizar Contraseña</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-6">
+                            <div class="form-group">
+                                <label for="pass">Contraseña Nueva:</label>
+                                <input onkeyup="verificar_pass()" type="password" id="pass" class="form-control " autofocus="" required="" placeholder="Escribe la contraseña">
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-sm-4 col-md-4 col-lg-6">
+                            <div class="form-group">
+                                <label for="pass1">Confirma Contraseña:</label>
+                                <input onkeyup="verificar_pass()" type="password" id="pass1" class="form-control " required="" placeholder="Confirma la contraseña">
+                            </div>
+                        </div>
+                        <hr class="linea">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <button type="button" id="btnCerrar" class="btn btn-login  btn-flat  pull-left" data-dismiss="modal">Cerrar</button>
+                            <input disabled = "disabled" id="btn_actualizar_pass" type="submit" class="btn btn-login  btn-flat  pull-right" value="Actualizar Contraseña" onclick="actualizar_pass()">	
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    function cambiar_contra(){
+        $("#modalContra").modal("show");
+        $("#frmContra")[0].reset();
+        $('#modalContra').on('shown.bs.modal', function () {
+            $('#pass').focus();            
+        }); 
+    }
+    function actualizar_pass(){
+        var pass   = $("#pass").val();
+        $.ajax({
+            url:"../sesiones/actualizar_pass2.php",
+            type:"POST",
+            dateType:"html",
+            data:{
+                'pass':pass
+            },
+            success:function(respuesta){
+            if (respuesta == "ok"){
+                alertify.set('notifier','position', 'bottom-right');
+                alertify.success('Se ha actualizado la contraseña' );
+                $("#frmContra")[0].reset();
+                $("#modalContra").modal("hide");
+            }else{
+                alertify.set('notifier','position', 'bottom-right');
+                alertify.error('La contraseña es igual a la Anterior' );
+            }
+            },
+            error:function(xhr,status){
+                alert(xhr);
+            },
+        });
+    }
+
+    function verificar_pass(){
+		var pass1 = $('#pass').val();
+		var pass2 = $('#pass1').val();
+
+		if(pass1.trim() != "" && pass2.trim() !=""){
+			if(pass1 == pass2){
+				$('#btn_actualizar_pass').removeAttr('disabled');
+			}else{
+				$('#btn_actualizar_pass').attr('disabled', 'disabled');
+			}
+		}else{
+			$('#btn_actualizar_pass').attr('disabled', 'disabled');
+		}
+	}
+</script>
 	<script src="../plugins/jQuery/jQuery-2.1.4.min.js"></script>
 	<!-- Preloaders -->
     <script src="../plugins/Preloaders/jquery.preloaders.js"></script>

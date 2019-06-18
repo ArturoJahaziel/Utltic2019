@@ -1,12 +1,13 @@
 <?php
 	//se manda llamar la conexion
-	include("../conexion/conexion.php");
+	include("../sesiones/verificar_sesion.php");
+	$id_usuario =  $_SESSION["idUsuario"];
 
 	$nombre    = $_POST["nombre"];
 	$paterno   = $_POST["paterno"];
 	$materno   = $_POST["materno"];
 	$direccion = $_POST["direccion"];
-	$fecha_nac = $_POST["fecha_nacE"];
+	$fecha_nac = $_POST["fecha_nac"];
 	$telefono  = $_POST["telefono"];
 	$correo    = $_POST["correo"];
 	$tipo      = $_POST["tipo"];
@@ -26,7 +27,12 @@
 	$hora=date ("H:i:s");
 
 	mysql_query("SET NAMES utf8");
-	$insertar = mysql_query("INSERT INTO personas 
+
+	$cadena_verificar = mysql_query("SELECT id_persona FROM personas
+	WHERE nombre = '$nombre' AND ap_paterno = '$paterno' AND ap_materno = '$materno'",$conexion);
+	$existe = mysql_num_rows($cadena_verificar);
+	if($existe == 0){
+		$insertar = mysql_query("INSERT INTO personas 
 									(
 									nombre,
 									ap_paterno,
@@ -53,10 +59,14 @@
 									'$fecha_nac',
 									'$correo',
 									'$tipo',
-									'1',
+									'$id_usuario',
 									'$fecha',
 									'$hora',
 									'1'
 									)
 								",$conexion)or die(mysql_error());
+		echo "ok";
+	}else{
+		echo "duplicado";
+	}
 ?>

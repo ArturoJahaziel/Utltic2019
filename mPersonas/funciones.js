@@ -20,6 +20,7 @@ function ver_alta(){
     preCarga(800,4);
     $("#lista").slideUp('low');
     $("#alta").slideDown('low');
+    $("#frmAlta")[0].reset();
     $("#nombre").focus();
 }
 
@@ -61,11 +62,17 @@ $("#frmAlta").submit(function(e){
             'tipo':tipo
         },
         success:function(respuesta){
-            
-        alertify.set('notifier','position', 'bottom-right');
-        alertify.success('Se ha guardado el registro' );
-        $("#frmAlta")[0].reset();
-        $("#nombre").focus();
+            if(respuesta == "ok"){
+                alertify.set('notifier','position', 'bottom-right');
+                alertify.success('Se ha guardado el registro' );
+                $("#frmAlta")[0].reset();
+                $("#nombre").focus();
+                $("#alta").hide();
+                llenar_lista();
+            }else{
+                alertify.set('notifier','position', 'bottom-right');
+                alertify.error('Registro Duplicado');
+            }
         // llenarLista();
         },
         error:function(xhr,status){
@@ -129,12 +136,16 @@ $("#frmActuliza").submit(function(e){
             'ide':ide
         },
         success:function(respuesta){
-
-        alertify.set('notifier','position', 'bottom-right');
-        alertify.success('Se ha actualizado el registro' );
-        $("#frmActuliza")[0].reset();
-        $("#modalEditar").modal("hide");
-        llenar_lista();
+            if(respuesta == "ok"){
+                alertify.set('notifier','position', 'bottom-right');
+                alertify.success('Se ha actualizado el registro' );
+                $("#frmActuliza")[0].reset();
+                $("#modalEditar").modal("hide");
+                llenar_lista();
+            }else{
+                alertify.set('notifier','position', 'bottom-right');
+                alertify.error('Registro Duplicado');
+            }
         },
         error:function(xhr,status){
             alert(xhr);
@@ -190,4 +201,24 @@ function status(concecutivo,id){
             alert(xhr);
         },
     });
+}
+function imprimir(){
+
+    var titular = "Lista de personas";
+    var mensaje = "¿Deseas generar un archivo con PDF oon la lista de personas activas";
+    // var link    = "pdfListaPersona.php?id="+idPersona+"&datos="+datos;
+    var link    = "pdfListaPersona.php?";
+
+    alertify.confirm('alert').set({transition:'zoom',message: 'Transition effect: zoom'}).show();
+    alertify.confirm(
+        titular, 
+        mensaje, 
+        function(){ 
+            window.open(link,'_blank');
+            }, 
+        function(){ 
+                alertify.error('Cancelar') ; 
+                // console.log('cancelado')
+              }
+    ).set('labels',{ok:'Generar PDF',cancel:'Cancelar'}); 
 }

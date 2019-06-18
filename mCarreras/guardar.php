@@ -1,6 +1,7 @@
 <?php
 	//se manda llamar la conexion
-	include("../conexion/conexion.php");
+	include("../sesiones/verificar_sesion.php");
+	$id_usuario =  $_SESSION["idUsuario"];
 
 	$nombre      = $_POST["nombre"];
 	$abreviatura = $_POST["abreviatura"];
@@ -12,7 +13,11 @@
 	$hora=date ("H:i:s");
 
 	mysql_query("SET NAMES utf8");
-	$insertar = mysql_query("INSERT INTO carreras 
+	$cadena_verificar = mysql_query("SELECT id_carrera FROM carreras
+	WHERE (nombre = '$nombre' OR abreviatura = '$abreviatura')",$conexion);
+	$existe = mysql_num_rows($cadena_verificar);
+	if($existe == 0){
+		$insertar = mysql_query("INSERT INTO carreras 
 									(
 									nombre,
 									abreviatura,
@@ -25,9 +30,14 @@
 									(
 									'$nombre',
 									'$abreviatura',
-									'1',
+									'$id_usuario',
 									'$fecha',
 									'$hora',
 									'1'
 									)",$conexion)or die(mysql_error());
+		echo "ok";
+	}else{
+		echo "duplicado";
+	}
+
 ?>

@@ -47,12 +47,17 @@ $("#frmAlta").submit(function(e){
                 'abreviatura':abreviatura
                 },
         success:function(respuesta){
-            
-        alertify.set('notifier','position', 'bottom-right');
-        alertify.success('Se ha guardado el registro' );
-        $("#frmAlta")[0].reset();
-        $("#nombre").focus();
-        // llenarLista();
+            if(respuesta == "ok"){
+                alertify.set('notifier','position', 'bottom-right');
+                alertify.success('Se ha guardado el registro' );
+                $("#frmAlta")[0].reset();
+                $("#nombre").focus();
+                llenar_lista();
+                ver_lista(); 
+            }else{
+                alertify.set('notifier','position', 'bottom-right');
+                alertify.error('Registro Duplicado' );
+            }
         },
         error:function(xhr,status){
             alert(xhr);
@@ -94,12 +99,16 @@ $("#frmActuliza").submit(function(e){
             'ide':ide
         },
         success:function(respuesta){
-
-        alertify.set('notifier','position', 'bottom-right');
-        alertify.success('Se ha actualizado el registro' );
-        $("#frmActuliza")[0].reset();
-        $("#modalEditar").modal("hide");
-        llenar_lista();
+        if (respuesta == "ok"){
+            alertify.set('notifier','position', 'bottom-right');
+            alertify.success('Se ha actualizado el registro' );
+            $("#frmActuliza")[0].reset();
+            $("#modalEditar").modal("hide");
+            llenar_lista();
+        }else{
+            alertify.set('notifier','position', 'bottom-right');
+            alertify.error('Registro Duplicado' );
+        }
         },
         error:function(xhr,status){
             alert(xhr);
@@ -149,4 +158,23 @@ function status(concecutivo,id){
             alert(xhr);
         },
     });
+}
+function imprimir(){
+  var titular = "Lista de Carreras";
+  var mensaje = "¿Deseas generar un archivo con PDF con la lista de carreras activas";
+  // var link    = "pdfListaPersona.php?id="+idPersona+"&datos="+datos;
+  var link    = "pdfListaCarreras.php?";
+
+  alertify.confirm('alert').set({transition:'zoom',message: 'Transition effect: zoom'}).show();
+  alertify.confirm(
+      titular, 
+      mensaje, 
+      function(){ 
+          window.open(link,'_blank');
+          }, 
+      function(){ 
+              alertify.error('Cancelar') ; 
+              // console.log('cancelado')
+            }
+  ).set('labels',{ok:'Generar PDF',cancel:'Cancelar'}); 
 }

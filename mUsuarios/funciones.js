@@ -39,18 +39,6 @@ $("#frmAlta").submit(function(e){
     var usuario   = $("#usuario").val();
     var contra    = $("#contra").val();
     //Validaciones
-//     if(noControl.length<5){
-//        alertify.dialog('alert').set({transition:'zoom',message: 'Transition effect: zoom'}).show();
-
-//        alertify.alert()
-//        .setting({
-//            'title':'Información',
-//            'label':'Salir',
-//            'message': 'El numero de control debe contener al menos 5 caracteres.' ,
-//            'onok': function(){ alertify.message('Gracias !');}
-//        }).show();
-//        return false;       
-//    }
    if(idPersona==0){
        alertify.dialog('alert').set({transition:'zoom',message: 'Transition effect: zoom'}).show();
 
@@ -71,18 +59,22 @@ $("#frmAlta").submit(function(e){
            type:"POST",
            dateType:"html",
            data:{
-                   'usuario':usuario,
-                   'idPersona':idPersona,
-                   'contra':contra
+                 'usuario':usuario,
+                 'idPersona':idPersona,
+                 'contra':contra
                 },
            success:function(respuesta){
-             
-           alertify.set('notifier','position', 'bottom-right');
-           alertify.success('Se ha guardado el registro' );
-           $("#frmAlta")[0].reset();
-           llenar_persona();
-           $("#alta").hide();
-           llenar_lista();
+            if(respuesta == "ok"){
+              alertify.set('notifier','position', 'bottom-right');
+              alertify.success('Se ha guardado el registro' );
+              $("#frmAlta")[0].reset();
+              llenar_persona();
+              $("#alta").hide();
+              llenar_lista();
+            }else{
+              alertify.set('notifier','position', 'bottom-right');
+              alertify.error('Nombre de usuario ya existe' );
+            }
            },
            error:function(xhr,status){
                alert(xhr);
@@ -92,7 +84,7 @@ $("#frmAlta").submit(function(e){
        return false;
 });
 
-function abrirModalEditar(idPersona,usuario,contra,idE){
+function abrirModalEditar(idPersona,usuario,idE){
   
     $("#frmActuliza")[0].reset();
 
@@ -100,7 +92,6 @@ function abrirModalEditar(idPersona,usuario,contra,idE){
 
    $("#idE").val(idE);
    $("#usuarioE").val(usuario);
-   $("#contraE").val(contra);
 
    $("#modalEditar").modal("show");
 
@@ -115,7 +106,22 @@ $("#frmActuliza").submit(function(e){
    var contra  = $("#contraE").val();
    var ide     = $("#idE").val();
    
-  
+   //Validaciones
+
+//    if(noControl.length<5){
+//        alertify.dialog('alert').set({transition:'zoom',message: 'Transition effect: zoom'}).show();
+
+//        alertify.alert()
+//        .setting({
+//            'title':'Información',
+//            'label':'Salir',
+//            'message': 'Debes seleccionar una contraseña.' ,
+//            'onok': function(){ alertify.message('Gracias !');}
+//        }).show();
+//        $("#usuarioE").focus();
+//        return false;       
+//    }
+
    if(contra==""){
        alertify.dialog('alert').set({transition:'zoom',message: 'Transition effect: zoom'}).show();
 
@@ -140,12 +146,16 @@ $("#frmActuliza").submit(function(e){
                    'ide':ide
                 },
            success:function(respuesta){
-
-           alertify.set('notifier','position', 'bottom-right');
-           alertify.success('Se ha actualizado el registro' );
-           $("#frmActuliza")[0].reset();
-           $("#modalEditar").modal("hide");
-           llenar_lista();
+            if(respuesta == "ok"){
+              alertify.set('notifier','position', 'bottom-right');
+              alertify.success('Se ha actualizado el registro' );
+              $("#frmActuliza")[0].reset();
+              $("#modalEditar").modal("hide");
+              llenar_lista();
+            }else{
+              alertify.set('notifier','position', 'bottom-right');
+              alertify.error('Nombre de usuario ya existe' );
+            }
            },
            error:function(xhr,status){
                alert(xhr);
@@ -253,7 +263,26 @@ function restaurar_contra(idUsuario){
             alertify.success('Se ha restaurado la contraseña' );
         },
         error : function(xhr, status) {
-            alert('Disculpe, existió un problema'); 
+            alert('Disculpe, existió un problema');
         },
     });
+}
+function imprimir(){
+  var titular = "Lista de Usuarios";
+  var mensaje = "¿Deseas generar un archivo con PDF oon la lista de usuarios activos";
+  // var link    = "pdfListaPersona.php?id="+idPersona+"&datos="+datos;
+  var link    = "pdfListaUsuarios.php?";
+
+  alertify.confirm('alert').set({transition:'zoom',message: 'Transition effect: zoom'}).show();
+  alertify.confirm(
+      titular, 
+      mensaje, 
+      function(){ 
+          window.open(link,'_blank');
+          }, 
+      function(){ 
+              alertify.error('Cancelar') ; 
+              // console.log('cancelado')
+            }
+  ).set('labels',{ok:'Generar PDF',cancel:'Cancelar'}); 
 }
