@@ -57,7 +57,7 @@
 									</div>
 								</form>
 							</section>
-							<section id="lista"></section>
+							<section id="lista"></section> 
 						</div>
 					</div>	
 				</div>			

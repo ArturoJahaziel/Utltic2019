@@ -89,7 +89,7 @@
 					<div class="container-fluid">
 						<div class="row">
 							<div class="col-md-12">
-								<a class="btn btn-login btn-flat pull-left" id="btnRegistrar" onclick="mostrar()"><i class="fas fa-address-card"></i> Registrar Entrada</a>
+								<a class="btn btn-login btn-flat pull-left" id="btnRegistrar" onclick="mostrar()"><i class="fa fa-credit-card"></i> Registrar Entrada</a>
 								&nbsp;
 								<input id="chkContra"  onchange='evaluarCheck(this.value)' data-on="Si" data-off="No" type="checkbox" checked data-toggle="toggle" data-size="mini" value='no'><label class="colorLetra"> &nbsp; Cambiar Contra</label>
 								<button type="submit" class="btn btn-login  btn-flat  pull-right" id="btnIngresar">
